@@ -36,24 +36,18 @@ class RegisterController @Inject() extends Controller {
         println(formData)
         val newPerson = AddUser.listOfPerson
         val dataBind = signupData.bindFromRequest.get
-
-        if(!newPerson.contains(formData.email)) {
-
           if (formData.password == formData.rePassword) {
 
             if (formData.phone.toString.length == 10) {
-
               AddUser.listOfPerson.append(formData)
               Redirect(routes.SignupController.showProfile(formData.email)).withSession("newuser" -> formData.email).flashing("message" -> "Registration Successful")
             }
-            else
+            else {
               Redirect(routes.HomeController.index()).flashing("invalidphone" -> "Phone number invalid")
+            }
           }
           else
             Redirect(routes.HomeController.index()).flashing("matcherror" -> "Pasword dosent Match")
-        }
-          else
-            Redirect(routes.HomeController.index()).flashing("existence" -> "Email already exists")
         }
     )
   }

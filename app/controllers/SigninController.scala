@@ -1,12 +1,14 @@
 package controllers
 
+import javax.inject.Inject
+
 import models.PersonLogin
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.mvc.{Action, Controller}
 import services.{AddUser, PersonData}
 
-class SigninController extends Controller{
+class SigninController @Inject() extends Controller{
 
   val loginForm: Form[PersonLogin]= Form (
     mapping(
