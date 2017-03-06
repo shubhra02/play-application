@@ -11,8 +11,8 @@ import services.AddUser
 
 class RegisterController @Inject() extends Controller {
 
-  def signUp = Action {
-    Ok(views.html.main("SignUp")(views.html.signup()))
+  def signUp = Action { implicit  request =>
+    Ok(views.html.signup())
   }
 
   val signupData  : Form[PersonSignup] = Form(
@@ -30,22 +30,31 @@ class RegisterController @Inject() extends Controller {
   def personPost = Action { implicit request =>
     signupData.bindFromRequest.fold(
       formWithErrors => {
-          Redirect(routes.SignupController.errorRedirect)
+          Redirect(routes.RegisterController.signUp).flashing("meassage" -> "Invalid Data, Try again")
       },
       formData => {
         println(formData)
+        val newPerson = AddUser.listOfPerson
+        val dataBind = signupData.bindFromRequest.get
 
-        if(!AddUser.listOfPerson.contains(formData.email)){
-          if(formData.password == formData.rePassword){
+        if(!newPerson.contains(formData.email)) {
+
+          if (formData.password == formData.rePassword) {
+
             if (formData.phone.toString.length == 10) {
-             val newUser = AddUser.listOfPerson.append(formData)
+
+              AddUser.listOfPerson.append(formData)
+              Redirect(routes.SignupController.showProfile(formData.email)).withSession("newuser" -> formData.email).flashing("message" -> "Registration Successful")
             }
+            else
+              Redirect(routes.HomeController.index()).flashing("invalidphone" -> "Phone number invalid")
           }
-
+          else
+            Redirect(routes.HomeController.index()).flashing("matcherror" -> "Pasword dosent Match")
         }
-        Redirect(routes.HomeController.index)
-
-      }
+          else
+            Redirect(routes.HomeController.index()).flashing("existence" -> "Email already exists")
+        }
     )
   }
 }

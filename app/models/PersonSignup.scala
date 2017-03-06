@@ -12,3 +12,10 @@ case class PersonSignup (
                         )
 
 
+case class PersonLogin (
+                         email: String,
+                         password: String
+
+                       )
+
+

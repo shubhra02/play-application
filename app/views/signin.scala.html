@@ -1,9 +1,22 @@
-@()
+@()(implicit flash : Flash)
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
+    <link rel="stylesheet" href="@routes.Assets.versioned("bootstrap/css/bootstrap.min.css")">
+    <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+    <script src="@routes.Assets.versioned("javascripts/hello.js")" type="text/javascript"></script>
 
+
+</head>
+
+<body>
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">WebSiteName</a>
+            <a class="navbar-brand" href="#">MyApplication</a>
         </div>
         <ul class="nav navbar-nav">
             <li class="active"><a href="#">Home</a></li>
@@ -12,7 +25,7 @@
         </ul>
     </div>
 </nav>
-
+<div class="col-md-8 says" > @flash.get("message").getOrElse("Welcome!")</div>
 
 <div id="myCarousel" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
@@ -53,13 +66,13 @@
 
 
 
-            <form method="get" action="">
+            <form method="get" action="@routes.SigninController.signInPost">
 
                 <div class="container">
-                    <label><b>Username</b></label>
-                    <input type="text" placeholder="Enter Username" name="username" required><br>
+                    <label><b>Username/Email</b></label><br>
+                    <input type="text" placeholder="Enter Username" name="email" required><br>
 
-                    <label><b>Password</b></label>
+                    <label><b>Password</b></label><br>
                     <input type="password" placeholder="Enter Password" name="password" required><br>
 
                     <button type="submit" class="btn btn-success">Login</button>
@@ -72,3 +85,5 @@
         </div>
     </div>
 </div>
+</body>
+</html>

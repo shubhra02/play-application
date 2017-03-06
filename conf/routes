@@ -16,5 +16,9 @@ GET    /signup                      controllers.RegisterController.signUp
 
 POST   /personpost                  controllers.RegisterController.personPost
 
-GET    /errorredirect               controllers.SignupController.errorRedirect
+POST   /signinpost                  controllers.SigninController.signInPost
+
+POST      /profile                   controllers.SignupController.showProfile(username : String)
+
+GET     /logout                     controllers.HomeController.logout
 

@@ -1,4 +1,18 @@
-@()
+@()(implicit flash : Flash)
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
+    <link rel="stylesheet" href="@routes.Assets.versioned("bootstrap/css/bootstrap.min.css")">
+    <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+    <script src="@routes.Assets.versioned("javascripts/hello.js")" type="text/javascript"></script>
+
+
+</head>
+
+<body>
 <div class="container">
     <div class="row">
 
@@ -24,6 +38,7 @@
                         <label for="email">Email</label>
                         <input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
                     </div>
+            <br/><span style="color:red;font-size:15px;font-weight:bold;">@flash.get("existence").getOrElse("")</span><br/>
 
                     <div class="form-group col-md-6">
                         <label for="password">Password</label>
@@ -34,7 +49,7 @@
                         <label for="rePassword">Confirm Password</label>
                         <input type="password" class="form-control" name="rePassword" id="rePassword" placeholder="Re-enter Password" required>
                     </div>
-
+            <br/><span style="color:red;font-size:15px;font-weight:bold;">@flash.get("matcherror").getOrElse("")</span><br/>
                     <div class="form-group col-md-6">
                         <label for="company">Company</label>
                         <input type="text" class="form-control" name="company" id="company" placeholder="Company Name">
@@ -43,6 +58,11 @@
                     <div class="form-group col-md-6">
                         <label for="phone">Phone Number</label>
                         <input type="text" class="form-control" name="phone" id="phone" placeholder="Phone Number">
+                    </div>
+
+                    <div class="uploadBtn">
+                        Upload your photo
+                        <input type="file"/>
                     </div>
 
 
@@ -74,3 +94,5 @@
 
     </div>
 </div>
+</body>
+</html>
