@@ -1,13 +1,11 @@
 package controllers
 
-import javax.inject._
 
+import com.google.inject.Inject
 import models.PersonSignup
 import play.api._
 import play.api.mvc._
 
-
-@Singleton
 class HomeController @Inject() extends Controller {
 
 

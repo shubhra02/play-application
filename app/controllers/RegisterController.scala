@@ -1,15 +1,17 @@
 package controllers
 
-import javax.inject.Inject
 
+
+import com.google.inject.Inject
 import models.PersonSignup
+import play.api.cache.CacheApi
 import services.AddUser._
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.mvc._
-import services.AddUser
+import services.{AddUser, MD5, PersonInfo}
 
-class RegisterController @Inject() extends Controller {
+class RegisterController @Inject()(personObj: PersonInfo) extends Controller {
 
   def signUp = Action { implicit request =>
     Ok(views.html.signup())
@@ -24,32 +26,41 @@ class RegisterController @Inject() extends Controller {
       "rePassword" -> nonEmptyText,
       "company" -> text,
       "phone" -> text
-    )(PersonSignup.apply)(PersonSignup.unapply)
+    /*())*/)(PersonSignup.apply)(PersonSignup.unapply)
   )
 
   def signupPost = Action { implicit request =>
     signupData.bindFromRequest.fold(
       formWithErrors => {
-         println(formWithErrors)
+
           Redirect(routes.RegisterController.signUp).flashing("meassage" -> "Invalid Data, Try again")
       },
-      (formData: PersonSignup) => {
-        println(formData)
+      formData => {
+
         val newPerson = AddUser.listOfPerson
         if (formData.password == formData.rePassword) {
+
           if (formData.phone.toString.length == 10) {
-            println("Yes")
-            val list = AddUser.listOfPerson.append(formData)
-            println("okay")
+
+            val encrypted = formData.copy(password = MD5.hash(formData.password))
+            personObj.setPersonData(formData.firstName, formData.lastName, formData.email, formData.password, formData.rePassword, formData.company, formData.phone)
+            //val list = AddUser.listOfPerson.append(encrypted)
+         /*   if(formData.isAdmin == true) {
+              forAdmin(formData)
+            }
+            else {
+              forPerson(formData)
+            }*/
+
             Redirect(routes.SignupController.showProfile(formData.email)).withSession("email" -> formData.email).flashing("message" -> "Registration Successful")
           }
           else {
-            println("not ok1")
+
             Redirect(routes.HomeController.index()).flashing("invalidphone" -> "Phone number invalid")
           }
         }
         else {
-          println("not ok2")
+
           Redirect(routes.HomeController.index()).flashing("matcherror" -> "Pasword dosent Match")
         }
       }

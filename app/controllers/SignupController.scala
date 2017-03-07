@@ -1,20 +1,22 @@
 package controllers
 
 
-import javax.inject.Inject
 
+
+import com.google.inject.Inject
+import models.PersonSignup
 import play.api.mvc._
-import services.PersonData
+import services.PersonInfo
 
 
 
-class SignupController @Inject() extends Controller {
+class SignupController @Inject()(personObj: PersonInfo) extends Controller {
 
   def showProfile(email: String) = Action { implicit request =>
     request.session.get("email").map { person =>
-      val personObj = new PersonData
+
       val data = personObj.getPersonData(person)
-      println("Ok")
+
 
       Ok(views.html.profile(data))
     }.getOrElse {

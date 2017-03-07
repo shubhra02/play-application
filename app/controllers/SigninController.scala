@@ -6,7 +6,7 @@ import models.PersonLogin
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.mvc.{Action, Controller}
-import services.{AddUser, PersonData}
+import services.{AddUser, MD5, PersonData}
 
 class SigninController @Inject() extends Controller{
 
@@ -27,7 +27,7 @@ class SigninController @Inject() extends Controller{
       loginData => {
         val newUser = AddUser.listOfPerson
         val result = newUser.map( user =>
-          if((user.email == loginData.email)&&(user.password == loginData.password)) true
+          if((user.email == loginData.email)&&(user.password == MD5.hash(loginData.password) )) true
           else false
         )
 

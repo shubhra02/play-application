@@ -8,3 +8,4 @@ object AddUser {
 
   val listOfPerson = ListBuffer[PersonSignup]()
 }
+
