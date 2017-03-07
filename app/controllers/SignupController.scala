@@ -10,10 +10,11 @@ import services.PersonData
 
 class SignupController @Inject() extends Controller {
 
-  def showProfile(username: String) = Action { implicit request =>
-    request.session.get("username").map { person =>
+  def showProfile(email: String) = Action { implicit request =>
+    request.session.get("email").map { person =>
       val personObj = new PersonData
       val data = personObj.getPersonData(person)
+      println("Ok")
 
       Ok(views.html.profile(data))
     }.getOrElse {

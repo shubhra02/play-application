@@ -32,7 +32,7 @@ class SigninController @Inject() extends Controller{
         )
 
         if(result.contains(true))
-        Redirect(routes.SignupController.showProfile(loginData.email)).withSession("username" -> loginData.email).flashing("meassage" -> "Login SuccessFul")
+        Redirect(routes.SignupController.showProfile(loginData.email)).withSession("email" -> loginData.email).flashing("meassage" -> "Login SuccessFul")
         else
           Redirect(routes.HomeController.index()).flashing("message"->"Incorrect username or password")
       }

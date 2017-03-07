@@ -11,7 +11,7 @@ import services.AddUser
 
 class RegisterController @Inject() extends Controller {
 
-  def signUp = Action { implicit  request =>
+  def signUp = Action { implicit request =>
     Ok(views.html.signup())
   }
 
@@ -23,32 +23,36 @@ class RegisterController @Inject() extends Controller {
       "password" -> nonEmptyText,
       "rePassword" -> nonEmptyText,
       "company" -> text,
-      "phone" -> number
+      "phone" -> text
     )(PersonSignup.apply)(PersonSignup.unapply)
   )
 
-  def personPost = Action { implicit request =>
+  def signupPost = Action { implicit request =>
     signupData.bindFromRequest.fold(
       formWithErrors => {
+         println(formWithErrors)
           Redirect(routes.RegisterController.signUp).flashing("meassage" -> "Invalid Data, Try again")
       },
-      formData => {
+      (formData: PersonSignup) => {
         println(formData)
         val newPerson = AddUser.listOfPerson
-        val dataBind = signupData.bindFromRequest.get
-          if (formData.password == formData.rePassword) {
-
-            if (formData.phone.toString.length == 10) {
-              AddUser.listOfPerson.append(formData)
-              Redirect(routes.SignupController.showProfile(formData.email)).withSession("newuser" -> formData.email).flashing("message" -> "Registration Successful")
-            }
-            else {
-              Redirect(routes.HomeController.index()).flashing("invalidphone" -> "Phone number invalid")
-            }
+        if (formData.password == formData.rePassword) {
+          if (formData.phone.toString.length == 10) {
+            println("Yes")
+            val list = AddUser.listOfPerson.append(formData)
+            println("okay")
+            Redirect(routes.SignupController.showProfile(formData.email)).withSession("email" -> formData.email).flashing("message" -> "Registration Successful")
           }
-          else
-            Redirect(routes.HomeController.index()).flashing("matcherror" -> "Pasword dosent Match")
+          else {
+            println("not ok1")
+            Redirect(routes.HomeController.index()).flashing("invalidphone" -> "Phone number invalid")
+          }
         }
+        else {
+          println("not ok2")
+          Redirect(routes.HomeController.index()).flashing("matcherror" -> "Pasword dosent Match")
+        }
+      }
     )
   }
 }

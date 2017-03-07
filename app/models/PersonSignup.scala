@@ -8,7 +8,7 @@ case class PersonSignup (
                         password: String,
                         rePassword:String,
                         company: String,
-                        phone: Int
+                        phone: String
                         )
 
 
