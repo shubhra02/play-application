@@ -1,3 +1,4 @@
+/*
 import javax.inject.Singleton
 
 import controllers.routes
@@ -22,3 +23,4 @@ class ErrorHandler extends HttpErrorHandler {
     Future.successful(Redirect(routes.HomeController.index()))
   }
 }
+*/

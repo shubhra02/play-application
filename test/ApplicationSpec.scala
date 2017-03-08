@@ -1,6 +1,6 @@
 import org.scalatestplus.play._
 import play.api.test._
-import play.api.test.Helpers._
+import play.api.test.Helpers.{contentAsString, _}
 
 /**
  * Add your spec here.
@@ -17,16 +17,29 @@ class ApplicationSpec extends PlaySpec with OneAppPerTest {
 
   }
 
+
   "HomeController" should {
 
-    "render the index page" in {
-      val home = route(app, FakeRequest(GET, "/")).get
+    "render the signin page" in {
+      val signin = route(app, FakeRequest(GET, "/")).get
 
-      status(home) mustBe OK
-      contentType(home) mustBe Some("text/html")
-      contentAsString(home) must include ("Your new application is ready.")
+      status(signin) mustBe OK
+      contentType(signin) mustBe Some("text/html")
+      contentAsString(signin) must include ("Welcome to the Website!")
     }
 
+  }
+
+  "SignupController" should {
+
+    "render the profile page" in {
+      val profile = route(app, FakeRequest(GET, "/profile")).get
+
+      status(profile) mustBe OK
+      contentType(profile) mustBe Some("text/html")
+      contentAsString(profile) must include ("Phone Number")
+
+    }
   }
 
   "CountController" should {

@@ -16,11 +16,14 @@ GET    /signup                      controllers.RegisterController.signUp
 
 POST   /signuppost                  controllers.RegisterController.signupPost
 
-GET   /signinpost                  controllers.SigninController.signInPost
+GET   /signinpost                   controllers.SigninController.signInPost
 
-GET      /profile/:email                 controllers.SignupController.showProfile(email : String)
+GET      /profile                   controllers.SignupController.showProfile
 
 GET     /logout                     controllers.HomeController.logout
 
-GET     /manage                      controllers.HomeController.manage
+GET     /manage                     controllers.AdminController.showManagement
 
+GET     /manageblock                     controllers.AdminController.blockUser(email: String)
+
+GET     /manageactive                     controllers.AdminController.activate(email: String)

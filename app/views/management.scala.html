@@ -1,30 +1,25 @@
-@(list: )(implicit flash: Flash)
+@(person: List[PersonSignup])(implicit flash: Flash)
 
 <html>
 <head>
     <script type="text/javascript" src="jquery.js"></script>
-    <script type="text/javascript">
-function AddRow()
-{
-    $('#myTable').append('<tr><td></td></tr>')
-}
-</script>
     <title></title>
 </head>
 <body>
 
 <div class="container">
-    @flash.get("success").getOrElse("")
+    @flash.get("message").getOrElse("")
     <table class="table table-striped">
         <tr>
             <td>List of Users</td>
 
         </tr>
-        @for(order <- list) {
+        @for(user <- person) {
         <tr>
-            <td>@order</td>
-            <td><a href="@routes.LoginController.disableUser(order)"> Disable User</a></td>
-            <td><a href="@routes.LoginController.enableUser(order)">Enable user</a></td>
+
+            <td>@user.email</td>
+            <td><a href="@routes.AdminController.blockUser(user.email)"><button type="button" class="btn btn-danger">BLOCK</button></a></td>
+            <td><a href="@routes.AdminController.activate(user.email)"><button type="button" class="btn btn-danger">ACTIVE</button></a></td>
         </tr>
         }
 

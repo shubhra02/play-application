@@ -9,7 +9,8 @@ case class PersonSignup (
                         rePassword:String,
                         company: String,
                         phone: String,
-                        isAdmin: Boolean
+                        isAdmin: Boolean,
+                        isBlocked: Boolean
                         )
 
 

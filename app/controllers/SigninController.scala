@@ -22,17 +22,18 @@ class SigninController @Inject() extends Controller{
   def signInPost = Action { implicit request =>
     loginForm.bindFromRequest().fold(
       formWithErrors => {
-        Redirect(routes.HomeController.index).flashing("meassage" -> "Invalid Data")
+        Redirect(routes.HomeController.index).flashing("message" -> "Invalid Data")
       },
       loginData => {
         val newUser = AddUser.listOfPerson
         val result = newUser.map( user =>
-          if((user.email == loginData.email)&&(user.password == MD5.hash(loginData.password) )) true
-          else false
+          if((user.email == loginData.email)&&(user.password == MD5.hash(loginData.password) )&&(!user.isBlocked)) true
+          else
+            false
         )
 
         if(result.contains(true))
-        Redirect(routes.SignupController.showProfile(loginData.email)).withSession("email" -> loginData.email).flashing("meassage" -> "Login SuccessFul")
+        Redirect(routes.SignupController.showProfile()).withSession("email" -> loginData.email).flashing("message" -> "Login SuccessFul")
         else
           Redirect(routes.HomeController.index()).flashing("message"->"Incorrect username or password")
       }

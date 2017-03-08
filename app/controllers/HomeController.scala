@@ -10,17 +10,14 @@ class HomeController @Inject() extends Controller {
 
 
   def index = Action { implicit  request =>
-    Ok(views.html.signin())
+    Ok(views.html.main("Welcome!")(views.html.signin()))
   }
   def displayProfile(person: PersonSignup) = Action{ implicit request =>
-    Ok(views.html.profile(person))
+    Ok(views.html.main("Profile")(views.html.profile(person)))
 
   }
   def logout = Action { implicit  request =>
-    Ok(views.html.signin()).withNewSession.flashing("message" -> "You have successfully logged out!")
+    Ok(views.html.main("Welcome!")(views.html.signin())).withNewSession.flashing("message" -> "You have successfully logged out!")
   }
-  def manage = Action {  implicit  request =>
 
-      Ok(views.html.management).flashing("message" -> "You have successfully logged out!")
-  }
 }
