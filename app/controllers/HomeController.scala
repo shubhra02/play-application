@@ -19,5 +19,8 @@ class HomeController @Inject() extends Controller {
   def logout = Action { implicit  request =>
     Ok(views.html.signin()).withNewSession.flashing("message" -> "You have successfully logged out!")
   }
+  def manage = Action {  implicit  request =>
 
+      Ok(views.html.management).flashing("message" -> "You have successfully logged out!")
+  }
 }

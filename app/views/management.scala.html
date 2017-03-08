@@ -1,5 +1,4 @@
-<!--
-@()
+@(list: )(implicit flash: Flash)
 
 <html>
 <head>
@@ -13,16 +12,23 @@ function AddRow()
     <title></title>
 </head>
 <body>
-<input type="button" id="btnAdd" onclick="AddRow()"/>
-<a href="">test</a>
-<table id="myTable">
-    <tbody >
-    <tr>
-        <td>
-            test
-        </td>
-    </tr>
-    </tbody>
-</table>
+
+<div class="container">
+    @flash.get("success").getOrElse("")
+    <table class="table table-striped">
+        <tr>
+            <td>List of Users</td>
+
+        </tr>
+        @for(order <- list) {
+        <tr>
+            <td>@order</td>
+            <td><a href="@routes.LoginController.disableUser(order)"> Disable User</a></td>
+            <td><a href="@routes.LoginController.enableUser(order)">Enable user</a></td>
+        </tr>
+        }
+
+    </table>
+</div>
 </body>
-</html>-->
+</html>

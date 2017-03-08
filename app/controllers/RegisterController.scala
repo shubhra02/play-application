@@ -25,8 +25,9 @@ class RegisterController @Inject()(personObj: PersonInfo) extends Controller {
       "password" -> nonEmptyText,
       "rePassword" -> nonEmptyText,
       "company" -> text,
-      "phone" -> text
-    /*())*/)(PersonSignup.apply)(PersonSignup.unapply)
+      "phone" -> text,
+      "isAdmin" -> boolean
+        )(PersonSignup.apply)(PersonSignup.unapply)
   )
 
   def signupPost = Action { implicit request =>
@@ -43,14 +44,7 @@ class RegisterController @Inject()(personObj: PersonInfo) extends Controller {
           if (formData.phone.toString.length == 10) {
 
             val encrypted = formData.copy(password = MD5.hash(formData.password))
-            personObj.setPersonData(formData.firstName, formData.lastName, formData.email, formData.password, formData.rePassword, formData.company, formData.phone)
-            //val list = AddUser.listOfPerson.append(encrypted)
-         /*   if(formData.isAdmin == true) {
-              forAdmin(formData)
-            }
-            else {
-              forPerson(formData)
-            }*/
+            personObj.setPersonData(formData.firstName, formData.lastName, formData.email, formData.password, formData.rePassword, formData.company, formData.phone, formData.isAdmin)
 
             Redirect(routes.SignupController.showProfile(formData.email)).withSession("email" -> formData.email).flashing("message" -> "Registration Successful")
           }

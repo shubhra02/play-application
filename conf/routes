@@ -22,3 +22,5 @@ GET      /profile/:email                 controllers.SignupController.showProfil
 
 GET     /logout                     controllers.HomeController.logout
 
+GET     /manage                      controllers.HomeController.manage
+

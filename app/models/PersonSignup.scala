@@ -8,8 +8,8 @@ case class PersonSignup (
                         password: String,
                         rePassword:String,
                         company: String,
-                        phone: String
-                        /*isAdmin: Boolean = true*/
+                        phone: String,
+                        isAdmin: Boolean
                         )
 
 
