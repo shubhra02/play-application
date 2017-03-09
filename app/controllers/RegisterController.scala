@@ -38,10 +38,10 @@ class RegisterController @Inject()(cache: CacheApi, personObj: PersonInfo) exten
           Redirect(routes.RegisterController.signUp()).flashing("meassage" -> "Invalid Data, Try again")
       },
       formData => {
-          println(formData)
-        val getuser = personObj.getPersonData(formData.email)
 
-        if (getuser.email == " ") {
+        val getuser: Option[PersonSignup] = personObj.getPersonData(formData.email)
+
+        if (getuser == None) {
           if (formData.password == formData.rePassword) {
 
             if (formData.phone.toString.length == 10) {

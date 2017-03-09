@@ -16,15 +16,15 @@ class AdminController @Inject()(cache: CacheApi, person: PersonInfo) extends Con
     val users = for {
       user <- getAllUsers
     }yield  person.getPersonData(user.email)
-    println(users)
-//    Ok(views.html.main("Management")(views.html.management(users.toList)))
-    Ok(views.html.management("Manage Page")(users.toList))
+
+    Ok(views.html.management("Manage Page")(users.flatten.toList))
 
   }
 
   def blockUser(email: String) = Action { implicit request =>
 
-    val toBlock = person.getPersonData(email)
+    val userData: Option[PersonSignup] = person.getPersonData(email)
+    val toBlock = processData(userData)
     val blocked = toBlock.copy(isBlocked = true)
     cache.remove(email)
     cache.set(email, blocked)
@@ -33,13 +33,20 @@ class AdminController @Inject()(cache: CacheApi, person: PersonInfo) extends Con
   }
 
   def activate(email: String) = Action { implicit request =>
-    val toActivate = person.getPersonData(email)
+    val userData = person.getPersonData(email)
+    val toActivate = processData(userData)
     val active = toActivate.copy(isBlocked = false)
     cache.remove(email)
     cache.set(email, active)
 
     Redirect(routes.AdminController.showManagement())
 
+  }
+
+  def processData(person: Option[PersonSignup]) = {
+    person match {
+      case Some(data) => data
+    }
   }
 
 }

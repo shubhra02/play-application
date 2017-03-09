@@ -1,4 +1,4 @@
-@(indexProfile: String)(person: models.PersonSignup)(implicit flash: Flash)
+@(indexProfile: String)(person: List[PersonSignup])(implicit flash: Flash)
 @main(indexProfile){
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
@@ -31,29 +31,29 @@
 <div class="row" style="margin-top:20px;">
     <div class="col-md-3" ></div>
 
-    <div class="col-md-6 info underline" >@person.firstName @person.lastName  </div>
+    <div class="col-md-6 info underline" >@person(0).firstName @person(0).lastName  </div>
     <div class="col-md-3" ></div>
 </div>
 <label>Email Id</label>
 <div class="row" style="margin-top:20px;">
     <div class="col-md-4" ></div>
 
-           <div class="col-md-4 restInfo" >@person.email</div>
+           <div class="col-md-4 restInfo" >@person(0).email</div>
     <div class="col-md-4" ></div>
 </div>
 <label>Company</label>
 <div class="row" style="margin-top:20px;">
     <div class="col-md-4" ></div>
 
-    <div class="col-md-4 restInfo" >@person.company</div>
+    <div class="col-md-4 restInfo" >@person(0).company</div>
 </div>
  <label>Phone Number</label>
 <div class="row" style="margin-top:20px;">
     <div class="col-md-4" ></div>
 
-    <div class="col-md-4 restInfo" >@person.phone</div>
+    <div class="col-md-4 restInfo" >@person(0).phone</div>
 </div>
-    @if(person.isAdmin){
+    @if(person(0).isAdmin){
 
         <div class="col-md-12 footer bot" >
 

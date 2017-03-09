@@ -1,9 +1,10 @@
 import models.PersonSignup
-import org.scalatest.mock.MockitoSugar
-import org.scalatestplus.play._
 import play.api.cache.CacheApi
 import services.PersonData
+import org.scalatest.mock.MockitoSugar
+import org.scalatestplus.play._
 
+import org.mockito.Mockito._
 
 class ServiceSpec extends PlaySpec with MockitoSugar{
 
@@ -11,8 +12,10 @@ class ServiceSpec extends PlaySpec with MockitoSugar{
     "get the person with the specified email Id" in {
       val cache = mock[CacheApi]
       val mockObj = new PersonData(cache)
-      cache.set("shubh@gmail.com",PersonSignup(" "," ","shubh@gmail.com"," "," "," "," ",true, false))
-      mockObj.getPersonData("shubh@gmail.com") mustBe PersonSignup(" "," ","shubh@gmail.com "," "," "," "," ",true, false)
+      when(mockObj.getPersonData("shubhra@gmail.com")) thenReturn Option(PersonSignup("","","shubhra@gmail.com","","","","",false, true))
+      mockObj.isData("shubhra@gmail.com") mustBe false
+
     }
   }
+
 }
