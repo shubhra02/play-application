@@ -1,15 +1,6 @@
-@()(implicit flash : Flash)
-<html lang="en">
-<head>
-    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
-    <link rel="stylesheet" href="@routes.Assets.versioned("/bootstrap/bootstrap.min.css")">
-    <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
-    <script src="@routes.Assets.versioned("javascripts/hello.js")" type="text/javascript"></script>
-         <script src="@routes.Assets.versioned("/bootstrap/jquery.min.js")"></script>
-    <script src="@routes.Assets.versioned("/bootstrap/bootstrap.min.js")"></script>
+@(displayBar: String)(implicit flash : Flash)
+@main(displayBar) {
 
- </head>
- <body>
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -120,5 +111,4 @@
 
     </div>
 </div>
-</body>
-</html>
+}

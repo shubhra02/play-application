@@ -1,4 +1,3 @@
-/*
 import javax.inject.Singleton
 
 import controllers.routes
@@ -15,6 +14,8 @@ class ErrorHandler extends HttpErrorHandler {
 
     statusCode match{
       case 400 =>     Future.successful(Redirect(routes.HomeController.index()))
+      case 404 =>     Future.successful(NotFound)
+      case _ =>       Future.successful(BadRequest)
     }
 
   }
@@ -23,4 +24,3 @@ class ErrorHandler extends HttpErrorHandler {
     Future.successful(Redirect(routes.HomeController.index()))
   }
 }
-*/

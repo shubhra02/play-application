@@ -18,7 +18,7 @@ class AdminController @Inject()(cache: CacheApi, person: PersonInfo) extends Con
     }yield  person.getPersonData(user.email)
     println(users)
 //    Ok(views.html.main("Management")(views.html.management(users.toList)))
-    Ok(views.html.management(users.toList))
+    Ok(views.html.management("Manage Page")(users.toList))
 
   }
 

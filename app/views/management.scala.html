@@ -1,11 +1,5 @@
-@(person: List[PersonSignup])(implicit flash: Flash)
-
-<html>
-<head>
-    <script type="text/javascript" src="jquery.js"></script>
-    <title></title>
-</head>
-<body>
+@(displayBar: String)(person: List[PersonSignup])(implicit flash: Flash)
+@main(displayBar) {
 
 <div class="container">
     @flash.get("message").getOrElse("")
@@ -19,11 +13,10 @@
 
             <td>@user.email</td>
             <td><a href="@routes.AdminController.blockUser(user.email)"><button type="button" class="btn btn-danger">BLOCK</button></a></td>
-            <td><a href="@routes.AdminController.activate(user.email)"><button type="button" class="btn btn-danger">ACTIVE</button></a></td>
+            <td><a href="@routes.AdminController.activate(user.email)"><button type="button" class="btn btn-success">ACTIVE</button></a></td>
         </tr>
         }
 
     </table>
 </div>
-</body>
-</html>
+}

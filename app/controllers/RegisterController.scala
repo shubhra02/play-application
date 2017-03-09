@@ -14,7 +14,7 @@ import services.{AddUser, MD5, PersonInfo}
 class RegisterController @Inject()(cache: CacheApi, personObj: PersonInfo) extends Controller {
 
   def signUp = Action { implicit request =>
-    Ok(views.html.signup())
+    Ok(views.html.signup("Sign Up"))
   }
 
   val signupData  : Form[PersonSignup] = Form(
@@ -34,21 +34,23 @@ class RegisterController @Inject()(cache: CacheApi, personObj: PersonInfo) exten
   def signupPost = Action { implicit request =>
     signupData.bindFromRequest.fold(
       formWithErrors => {
+        println(formWithErrors)
           Redirect(routes.RegisterController.signUp()).flashing("meassage" -> "Invalid Data, Try again")
       },
       formData => {
-
+          println(formData)
         val getuser = personObj.getPersonData(formData.email)
+
         if (getuser.email == " ") {
           if (formData.password == formData.rePassword) {
 
             if (formData.phone.toString.length == 10) {
 
               val encrypted = formData.copy(password = MD5.hash(formData.password))
-                 println(encrypted)
+
               cache.set(formData.email, encrypted)
               AddUser.listOfPerson.append(encrypted)
-                 println(formData)
+
               Redirect(routes.SignupController.showProfile()).withSession("email" -> formData.email).flashing("message" -> "Registration Successful")
             }
             else {

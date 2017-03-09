@@ -1,5 +1,5 @@
 @()(implicit flash : Flash)
-
+@main("Welcome Page") {
 
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
@@ -54,7 +54,7 @@
 
 
 
-            <form method="get" action="@routes.SigninController.signInPost">
+            <form method="post" action="@routes.SigninController.signInPost">
 
                     <label><b>Username/Email</b></label><br>
                     <input type="text" placeholder="Enter Username" name="email" required><br>
@@ -76,3 +76,4 @@
 </div>
 
 
+}

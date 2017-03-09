@@ -16,7 +16,7 @@ GET    /signup                      controllers.RegisterController.signUp
 
 POST   /signuppost                  controllers.RegisterController.signupPost
 
-GET   /signinpost                   controllers.SigninController.signInPost
+POST   /signinpost                   controllers.SigninController.signInPost
 
 GET      /profile                   controllers.SignupController.showProfile
 
